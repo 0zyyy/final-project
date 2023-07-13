@@ -57,13 +57,16 @@
                 <div class="card-header"><h5>{{ question.question_text}}</h5></div>
                 {% csrf_token %}
                 <div class="form-group">
+                    {% for choice in submission.choice.all%}
+                     {{ choice }}
+                    {% endfor %}
                    {%for choice in question.choice_set.all%}
                     <div class="form-check">
                         <label class="form-check-label">
                         {%if choice.is_correct and choice in submission.choice.all%} 
                             <label class="text-success" name="{{choice.choice_text}}" id="{{choice.id}}">Correct answer: {{ choice.choice_text }}</label>
                             <br/>
-                        {%elif choice.is_correct%}
+                       {%elif choice.is_correct%}
                             <label class="text-success" name="{{choice.choice_text}}" id="{{choice.id}}">Correct answer: {{ choice.choice_text }}</label>
                             <br/>
                         {%elif choice in submission.choice.all and not choice.is_correct%} 
